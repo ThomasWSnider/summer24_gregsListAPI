@@ -10,4 +10,11 @@ export const HomeSchema = new Schema({
   price: { type: Number, max: 10000000, min: 1, required: true },
   description: { type: String, minLength: 30, maxLength: 500, required: true },
   creatorId: { type: Schema.ObjectId, required: true, ref: 'Account' }
-}, { toJSON: {} })
+}, { toJSON: { virtuals: true } })
+
+HomeSchema.virtual('creator', {
+  localField: 'creatorId',
+  ref: 'Account',
+  foreignField: '_id',
+  justOne: true
+})
